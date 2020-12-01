@@ -8,7 +8,7 @@ import (
 )
 
 func TestSimple(t *testing.T) {
-	tree, err := goparselib.Parse(simple, root)
+	tree, err := goparselib.ParseString(simple, root)
 	if err != nil {
 		t.Error(err)
 	}
@@ -16,11 +16,10 @@ func TestSimple(t *testing.T) {
 }
 
 func TestComplete(t *testing.T) {
-	tree, err := goparselib.Parse(complete, root)
+	tree, err := goparselib.ParseString(complete, root)
 	if err != nil {
 		t.Error(err)
 	}
-	tree.Populate(complete)
 	t.Log(tree)
 
 	reduced, err := tree.Reduce(goparselib.Blank, goparselib.BlankOpt, nil)
@@ -38,7 +37,7 @@ func TestComplete(t *testing.T) {
 }
 
 func TestStorage(t *testing.T) {
-	tree, err := goparselib.Parse(storageStr, storage)
+	tree, err := goparselib.ParseString(storageStr, storage)
 	if err != nil {
 		t.Error(err)
 	}
@@ -46,7 +45,7 @@ func TestStorage(t *testing.T) {
 }
 
 func TestEmptyBody(t *testing.T) {
-	tree, err := goparselib.Parse(emptyBody, storageBody)
+	tree, err := goparselib.ParseString(emptyBody, storageBody)
 	if err != nil {
 		t.Error(err)
 	}
@@ -54,7 +53,7 @@ func TestEmptyBody(t *testing.T) {
 }
 
 func TestRegionBody(t *testing.T) {
-	tree, err := goparselib.Parse(regionStr, storageBody)
+	tree, err := goparselib.ParseString(regionStr, storageBody)
 	if err != nil {
 		t.Error(err)
 	}
@@ -62,20 +61,18 @@ func TestRegionBody(t *testing.T) {
 }
 
 func TestList(t *testing.T) {
-	tree, err := goparselib.Parse(listStr, goparselib.List(goparselib.Ident, goparselib.Comma, goparselib.Blank))
+	tree, err := goparselib.ParseString(listStr, goparselib.List(goparselib.Ident, goparselib.Comma, goparselib.Blank))
 	if err != nil {
 		t.Error(err)
 	}
-	tree.Populate(listStr)
 	t.Log(tree)
 }
 
 func TestEmptyList(t *testing.T) {
-	tree, err := goparselib.Parse(emptyBody, goparselib.List(goparselib.Ident, goparselib.Comma, goparselib.Blank))
+	tree, err := goparselib.ParseString(emptyBody, goparselib.List(goparselib.Ident, goparselib.Comma, goparselib.Blank))
 	if err != nil {
 		t.Error(err)
 	}
-	tree.Populate(listStr)
 	t.Log(tree)
 }
 

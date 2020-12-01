@@ -2,9 +2,10 @@ package goparselib
 
 var (
 	Ident    = CTerminal("[a-zA-Z_][a-zA-Z0-9_]*")
-	EOL      = CTerminal("[[:blank:]]*\\\n")
+	EOL      = CTerminal("[[:blank:]]*[\\\n\\\r]+")
 	Blank    = CTerminal("[[:blank:]]+")
 	BlankOpt = CTerminal("[[:blank:]]*")
+	Null     = CTerminal("\\x00")
 	Float    = CTerminal("[+\\-]?([0]|[1-9][0-9]*)(\\.[0-9]+)?")
 	Integer  = CTerminal("[+\\-]?([0]|[1-9][0-9]*)")
 	Natural  = CTerminal("[0]|[1-9][0-9]*")
@@ -17,15 +18,15 @@ var (
 func Plus(of Symbol) Symbol {
 	plus := new(Symbol)
 	Define(plus, Union{
-		of,
 		Concat{of, R(plus)},
+		of,
 	})
 	return R(plus)
 }
 
 // Optional creates a symbol matching zero or one of the symbol 'of'
 func Optional(of Symbol) Symbol {
-	return Union{nil, of}
+	return Union{of, nil}
 }
 
 // List creates a symbol matching a list of elements 'of' separated by 'separator', with optional 'blank'

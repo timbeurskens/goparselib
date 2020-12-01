@@ -9,10 +9,10 @@ import (
 )
 
 func TestParse(t *testing.T) {
-	t.Log(goparselib.Parse("(a&-a&-a)#", root))
+	t.Log(goparselib.ParseString("(a&-a&-a)#", root))
 	t.Log("------")
 	str := "((a&-b&c)|-(-a|(a|b|c)))#"
-	tree, _ := goparselib.Parse(str, root)
+	tree, _ := goparselib.ParseString(str, root)
 	tree.Populate(str)
 
 	encoder := json.NewEncoder(os.Stdout)

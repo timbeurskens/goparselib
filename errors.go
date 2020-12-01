@@ -14,12 +14,12 @@ func (s SyntaxError) Error() string {
 }
 
 type InputError struct {
-	Start, End int64
-	Err        error
+	At  int64
+	Err error
 }
 
 func (i InputError) Error() string {
-	return fmt.Sprintf("Input error between: %d and %d (%s)", i.Start, i.End, i.Err)
+	return fmt.Sprintf("Input error at: %d (%s)", i.At, i.Err)
 }
 
 type ParserError struct {

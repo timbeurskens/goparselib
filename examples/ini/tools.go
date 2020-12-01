@@ -13,11 +13,10 @@ type Reader struct {
 }
 
 func New(input string) (Reader, error) {
-	tree, err := goparselib.Parse(input, root)
+	tree, err := goparselib.ParseString(input, root)
 	if err != nil {
 		return Reader{}, err
 	}
-	tree.Populate(input)
 	ast, err := tree.Reduce(nil, open, close, eof, eq, goparselib.Blank, goparselib.EOL, goparselib.BlankOpt)
 	if err != nil {
 		return Reader{}, err

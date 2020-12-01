@@ -18,6 +18,14 @@ var (
 )
 
 func init() {
-	Define(sections, Union{nil, Concat{EOL, R(sections)}, Concat{section, R(sections)}})
-	Define(properties, Union{nil, Concat{EOL, R(properties)}, Concat{property, R(properties)}})
+	Define(sections, Union{
+		Concat{section, R(sections)},
+		Concat{EOL, R(sections)},
+		nil,
+	})
+	Define(properties, Union{
+		Concat{property, R(properties)},
+		Concat{EOL, R(properties)},
+		nil,
+	})
 }

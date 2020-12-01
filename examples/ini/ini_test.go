@@ -8,11 +8,24 @@ import (
 )
 
 func TestBasic(t *testing.T) {
-	n, err := goparselib.Parse(basic1, root)
+	n, err := goparselib.ParseString(basic1, root)
 	if err != nil {
 		t.Error(err)
 	}
 	n.Populate(basic1)
+	n2, err := n.Reduce(goparselib.Blank, eof)
+	if err != nil {
+		t.Error(err)
+	}
+	n2.Output(log.Writer())
+}
+
+func TestEmpty(t *testing.T) {
+	n, err := goparselib.ParseString(empty, root)
+	if err != nil {
+		t.Error(err)
+	}
+	n.Populate(empty)
 	n2, err := n.Reduce(goparselib.Blank, eof)
 	if err != nil {
 		t.Error(err)
@@ -45,6 +58,14 @@ size = 4
 	t.Log(s.Property("size"))
 }
 
+func TestFile(t *testing.T) {
+	tree, err := goparselib.ParseFile("test.ini", root)
+	if err != nil {
+		t.Error(err)
+	}
+	t.Log(tree)
+}
+
 const (
 	basic1 = `
 test = 22
@@ -54,5 +75,7 @@ age = hoi
 
 [a]
 a=1
-#`
+#\x0`
+
+	empty = `#`
 )

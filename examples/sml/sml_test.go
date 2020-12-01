@@ -8,10 +8,10 @@ import (
 )
 
 func TestBasic(t *testing.T) {
-	t.Log(goparselib.Parse(line, timelineLine))
-	t.Log(goparselib.Parse(eolExample, eol))
+	t.Log(goparselib.ParseString(line, timelineLine))
+	t.Log(goparselib.ParseString(eolExample, eol))
 
-	tree, err := goparselib.Parse(basic, goparselib.R(root))
+	tree, err := goparselib.ParseString(basic, goparselib.R(root))
 	if err != nil {
 		t.Error(err)
 	}
