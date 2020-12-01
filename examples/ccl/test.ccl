@@ -1,0 +1,24 @@
+resource my_cluster {
+    storage my_db {
+        region: Bogota,
+        engine: MySQL,
+        CPU: 2 cores,
+        memory: 2 GB,
+        IPV6: no,
+        storage: BLS of 16 GB
+    },
+    computing my_server {
+        region: Bogota,
+        OS: Linux,
+        IPV6: yes,
+        storage: SSD of 256 GB,
+        CPU: 4 cores,
+        memory: 8 GB
+    },
+    my_server,
+    computing second_server {
+        OS: Windows Server 2019,
+        storage: BLS of 1024GB,
+        CPU: 8 cores
+    }
+}
