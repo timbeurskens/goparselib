@@ -8,9 +8,9 @@ import (
 )
 
 func TestBasic(t *testing.T) {
-	ok, n := goparselib.Parse(basic1, root)
-	if !ok {
-		t.Error("not ok")
+	n, err := goparselib.Parse(basic1, root)
+	if err != nil {
+		t.Error(err)
 	}
 	n.Populate(basic1)
 	n2, err := n.Reduce(goparselib.Blank, eof)
@@ -44,3 +44,15 @@ size = 4
 
 	t.Log(s.Property("size"))
 }
+
+const (
+	basic1 = `
+test = 22
+
+[h]
+age = hoi
+
+[a]
+a=1
+#`
+)

@@ -37,27 +37,3 @@ func init() {
 	Define(section, Union{R(program), R(timeline)})
 	Define(root, Union{eof, Concat{R(section), R(root)}})
 }
-
-const (
-	eolExample = ` 
-`
-	basic = `timeline {
- 1) play rainbow for 10 seconds
- 2) play test for 20 milliseconds
-}#`
-	line = `1) play rainbow for 10 seconds
-`
-
-	example1 = `
-
-program rainbow {
-}
-
-timeline {
-  1) play rainbow for 10 seconds
-  2) wait for 5 seconds
-  3) jump to step 2
-}
-#
-`
-)

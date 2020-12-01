@@ -21,15 +21,3 @@ func init() {
 	Define(sections, Union{nil, Concat{EOL, R(sections)}, Concat{section, R(sections)}})
 	Define(properties, Union{nil, Concat{EOL, R(properties)}, Concat{property, R(properties)}})
 }
-
-const (
-	basic1 = `
-test = 22
-
-[h]
-age = hoi
-
-[a]
-a=1
-#`
-)
