@@ -12,7 +12,6 @@ func TestBasic(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-	n.Populate(basic1)
 	n2, err := n.Reduce(goparselib.Blank)
 	if err != nil {
 		t.Error(err)
@@ -25,7 +24,6 @@ func TestEmpty(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-	n.Populate(empty)
 	n2, err := n.Reduce(goparselib.Blank)
 	if err != nil {
 		t.Error(err)

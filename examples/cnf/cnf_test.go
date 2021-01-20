@@ -13,7 +13,6 @@ func TestParse(t *testing.T) {
 	t.Log("------")
 	str := "((a&-b&c)|-(-a|(a|b|c)))#"
 	tree, _ := goparselib.ParseString(str, root)
-	tree.Populate(str)
 
 	encoder := json.NewEncoder(os.Stdout)
 	encoder.SetIndent("", "  ")

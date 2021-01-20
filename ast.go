@@ -17,6 +17,7 @@ func inSymbols(s Symbol, symbols []Symbol) bool {
 }
 
 // Populate maps a given string to the node structure by placing substrings in the corresponding leaf nodes
+// Deprecated: Newer versions of the parser automatically populate the parse tree
 func (n *Node) Populate(str string) {
 	if n.Children == nil || len(n.Children) == 0 {
 		n.Contents = str[n.Start : n.Size+n.Start]
