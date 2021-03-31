@@ -15,6 +15,14 @@ func TestSimple(t *testing.T) {
 	t.Log(tree)
 }
 
+func TestCompleteFile(t *testing.T) {
+	tree, err := goparselib.ParseFile("test.ccl", root)
+	if err != nil {
+		t.Error(err)
+	}
+	t.Log(tree)
+}
+
 func TestComplete(t *testing.T) {
 	tree, err := goparselib.ParseString(complete, root)
 	if err != nil {

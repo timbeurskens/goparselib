@@ -8,12 +8,11 @@ import (
 )
 
 func TestBasic(t *testing.T) {
-	n, err := goparselib.ParseString(basic1, root)
+	n, err := goparselib.ParseString(basic1, Root)
 	if err != nil {
 		t.Error(err)
 	}
-	n.Populate(basic1)
-	n2, err := n.Reduce(goparselib.Blank, eof)
+	n2, err := n.Reduce(goparselib.Blank)
 	if err != nil {
 		t.Error(err)
 	}
@@ -21,12 +20,11 @@ func TestBasic(t *testing.T) {
 }
 
 func TestEmpty(t *testing.T) {
-	n, err := goparselib.ParseString(empty, root)
+	n, err := goparselib.ParseString(empty, Root)
 	if err != nil {
 		t.Error(err)
 	}
-	n.Populate(empty)
-	n2, err := n.Reduce(goparselib.Blank, eof)
+	n2, err := n.Reduce(goparselib.Blank)
 	if err != nil {
 		t.Error(err)
 	}
@@ -59,7 +57,7 @@ size = 4
 }
 
 func TestFile(t *testing.T) {
-	tree, err := goparselib.ParseFile("test.ini", root)
+	tree, err := goparselib.ParseFile("test.ini", Root)
 	if err != nil {
 		t.Error(err)
 	}

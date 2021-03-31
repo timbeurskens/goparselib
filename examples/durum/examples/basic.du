@@ -1,0 +1,27 @@
+def counter : int32_t;
+def led : gpio(10, OUTPUT);
+def button : gpio(11, INPUT_PULLUP);
+
+def timer : timer(100 ms);
+
+event button_pressed <- button.rising;
+event timer_tick <- timer.tick;
+
+action open_door {
+    led = HIGH;
+}
+
+state initial {
+
+}
+
+state waiting {
+
+}
+
+state door_open {
+    // keep some persistent state variables
+    def time : int(0);
+
+
+}

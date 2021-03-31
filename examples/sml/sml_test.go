@@ -16,8 +16,6 @@ func TestBasic(t *testing.T) {
 		t.Error(err)
 	}
 
-	tree.Populate(basic)
-
 	tree.Output(log.Writer())
 	t.Log(tree)
 
@@ -46,5 +44,22 @@ timeline {
   3) jump to step 2
 }
 #
+`
+
+	conceptual = `
+palette ocean {
+	0: #00FF00
+	0.5: #FF00FF	
+}
+
+palette  {
+	
+}
+
+led range [0-20] {
+	color = ocean[]
+}
+
+
 `
 )

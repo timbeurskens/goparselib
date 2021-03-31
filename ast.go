@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"reflect"
 )
 
 func inSymbols(s Symbol, symbols []Symbol) bool {
@@ -16,6 +17,7 @@ func inSymbols(s Symbol, symbols []Symbol) bool {
 }
 
 // Populate maps a given string to the node structure by placing substrings in the corresponding leaf nodes
+// Deprecated: Newer versions of the parser automatically populate the parse tree
 func (n *Node) Populate(str string) {
 	if n.Children == nil || len(n.Children) == 0 {
 		n.Contents = str[n.Start : n.Size+n.Start]
@@ -25,6 +27,36 @@ func (n *Node) Populate(str string) {
 	for i := range n.Children {
 		n.Children[i].Populate(str)
 	}
+}
+
+// Collapse maps a nil-reduced, recurrent tree to a list under the given condition
+func (n Node) Collapse(selectFn func(Node) (Node, bool), walkFn func(Node) bool) []Node {
+	result := make([]Node, 0)
+
+	n.Walk(func(node Node) bool {
+		if n, ok := selectFn(node); ok {
+			result = append(result, n)
+		}
+		return walkFn(node)
+	})
+
+	return result
+}
+
+func (n Node) CollapseType(symbol Symbol) ([]Node, error) {
+	return n.Collapse(func(node Node) (Node, bool) {
+		if reflect.DeepEqual(node.Type, symbol) {
+			return node, true
+		}
+		return Node{}, false
+	}, func(node Node) bool {
+		return true
+	}), nil
+}
+
+// NilReduce ensures no nil symbols exist in the tree
+func (n Node) NilReduce() (Node, error) {
+	return n.Reduce(nil)
 }
 
 // Reduce creates a reduced copy of the original tree by removing all nodes with type in symbols
@@ -97,5 +129,15 @@ func (n Node) Find(condition func(Node) bool) (Node, error) {
 		}
 
 		return Node{}, errors.New("not found")
+	}
+}
+
+func (n Node) Walk(continueCondition func(Node) bool) {
+	if !continueCondition(n) {
+		return
+	} else if n.Children != nil {
+		for c := range n.Children {
+			n.Children[c].Walk(continueCondition)
+		}
 	}
 }
