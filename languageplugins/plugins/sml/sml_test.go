@@ -12,7 +12,7 @@ func TestBasic(t *testing.T) {
 	t.Log(parser.ParseString(line, timelineLine))
 	t.Log(parser.ParseString(eolExample, eol))
 
-	tree, err := parser.ParseString(basic, goparselib.R(root))
+	tree, err := parser.ParseString(basic, goparselib.R(Root))
 	if err != nil {
 		t.Error(err)
 	}

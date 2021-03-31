@@ -9,7 +9,7 @@ import (
 )
 
 func TestSimple(t *testing.T) {
-	tree, err := parser.ParseString(simple, root)
+	tree, err := parser.ParseString(simple, Root)
 	if err != nil {
 		t.Error(err)
 	}
@@ -17,7 +17,7 @@ func TestSimple(t *testing.T) {
 }
 
 func TestCompleteFile(t *testing.T) {
-	tree, err := parser.ParseFile("test.ccl", root)
+	tree, err := parser.ParseFile("test.ccl", Root)
 	if err != nil {
 		t.Error(err)
 	}
@@ -25,7 +25,7 @@ func TestCompleteFile(t *testing.T) {
 }
 
 func TestComplete(t *testing.T) {
-	tree, err := parser.ParseString(complete, root)
+	tree, err := parser.ParseString(complete, Root)
 	if err != nil {
 		t.Error(err)
 	}

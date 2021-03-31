@@ -56,5 +56,5 @@ var (
 	storage                = Concat{CTerminal("storage"), Blank, Ident, BlankOpt, LBracket, blankList, storageBody, blankList, RBracket}
 	computing              = Concat{CTerminal("computing"), Blank, Ident, BlankOpt, LBracket, blankList, computingBody, blankList, RBracket}
 	resourceBody           = List(Union{computing, storage, Ident}, Comma, blankList)
-	root                   = Concat{CTerminal("resource"), Blank, Ident, BlankOpt, LBracket, blankList, resourceBody, blankList, RBracket}
+	Root                   = Concat{CTerminal("resource"), Blank, Ident, BlankOpt, LBracket, blankList, resourceBody, blankList, RBracket}
 )

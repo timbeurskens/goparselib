@@ -26,7 +26,7 @@ var (
 	timeline     = new(Symbol)
 	program      = new(Symbol)
 	section      = new(Symbol)
-	root         = new(Symbol)
+	Root         = new(Symbol)
 )
 
 func init() {
@@ -35,5 +35,5 @@ func init() {
 	Define(program, Concat{programLit, space, lopen, eol, R(programBody), rclose})
 	Define(timeline, Concat{timelineLit, space, lopen, eol, R(timelineBody), rclose})
 	Define(section, Union{R(program), R(timeline)})
-	Define(root, Union{eof, Concat{R(section), R(root)}})
+	Define(Root, Union{eof, Concat{R(section), R(Root)}})
 }
