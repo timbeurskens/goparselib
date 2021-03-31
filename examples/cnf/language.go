@@ -1,6 +1,6 @@
 package cnf
 
-import . "goparselib"
+import . "github.com/timbeurskens/goparselib"
 
 var (
 	variable       = CTerminal("[a-z][a-z0-9]*")

@@ -1,6 +1,6 @@
 package sml
 
-import . "goparselib"
+import . "github.com/timbeurskens/goparselib"
 
 var (
 	programLit   = CTerminal("program")

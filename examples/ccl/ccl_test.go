@@ -1,14 +1,15 @@
 package ccl
 
 import (
+	"github.com/timbeurskens/goparselib/parser"
 	"strings"
 	"testing"
 
-	"goparselib"
+	"github.com/timbeurskens/goparselib"
 )
 
 func TestSimple(t *testing.T) {
-	tree, err := goparselib.ParseString(simple, root)
+	tree, err := parser.ParseString(simple, root)
 	if err != nil {
 		t.Error(err)
 	}
@@ -16,7 +17,7 @@ func TestSimple(t *testing.T) {
 }
 
 func TestCompleteFile(t *testing.T) {
-	tree, err := goparselib.ParseFile("test.ccl", root)
+	tree, err := parser.ParseFile("test.ccl", root)
 	if err != nil {
 		t.Error(err)
 	}
@@ -24,7 +25,7 @@ func TestCompleteFile(t *testing.T) {
 }
 
 func TestComplete(t *testing.T) {
-	tree, err := goparselib.ParseString(complete, root)
+	tree, err := parser.ParseString(complete, root)
 	if err != nil {
 		t.Error(err)
 	}
@@ -45,7 +46,7 @@ func TestComplete(t *testing.T) {
 }
 
 func TestStorage(t *testing.T) {
-	tree, err := goparselib.ParseString(storageStr, storage)
+	tree, err := parser.ParseString(storageStr, storage)
 	if err != nil {
 		t.Error(err)
 	}
@@ -53,7 +54,7 @@ func TestStorage(t *testing.T) {
 }
 
 func TestEmptyBody(t *testing.T) {
-	tree, err := goparselib.ParseString(emptyBody, storageBody)
+	tree, err := parser.ParseString(emptyBody, storageBody)
 	if err != nil {
 		t.Error(err)
 	}
@@ -61,7 +62,7 @@ func TestEmptyBody(t *testing.T) {
 }
 
 func TestRegionBody(t *testing.T) {
-	tree, err := goparselib.ParseString(regionStr, storageBody)
+	tree, err := parser.ParseString(regionStr, storageBody)
 	if err != nil {
 		t.Error(err)
 	}
@@ -69,7 +70,7 @@ func TestRegionBody(t *testing.T) {
 }
 
 func TestList(t *testing.T) {
-	tree, err := goparselib.ParseString(listStr, goparselib.List(goparselib.Ident, goparselib.Comma, goparselib.Blank))
+	tree, err := parser.ParseString(listStr, goparselib.List(goparselib.Ident, goparselib.Comma, goparselib.Blank))
 	if err != nil {
 		t.Error(err)
 	}
@@ -77,7 +78,7 @@ func TestList(t *testing.T) {
 }
 
 func TestEmptyList(t *testing.T) {
-	tree, err := goparselib.ParseString(emptyBody, goparselib.List(goparselib.Ident, goparselib.Comma, goparselib.Blank))
+	tree, err := parser.ParseString(emptyBody, goparselib.List(goparselib.Ident, goparselib.Comma, goparselib.Blank))
 	if err != nil {
 		t.Error(err)
 	}

@@ -1,14 +1,15 @@
-package goparselib
+package parser
 
 import (
+	"github.com/timbeurskens/goparselib"
 	"io"
 	"os"
 	"strings"
 
-	"goparselib/parsereader"
+	"github.com/timbeurskens/goparselib/parsereader"
 )
 
-func ParseString(str string, language Symbol) (Node, error) {
+func ParseString(str string, language goparselib.Symbol) (goparselib.Node, error) {
 	reader := strings.NewReader(str)
 	return ParseInput(parsereader.FromReadSeeker(reader), language)
 }
@@ -39,10 +40,10 @@ func loc2string(start int64, n int, reader parsereader.Reader) (str string, err 
 	return
 }
 
-func ParseFile(filename string, language Symbol) (Node, error) {
+func ParseFile(filename string, language goparselib.Symbol) (goparselib.Node, error) {
 	file, err := os.Open(filename)
 	if err != nil {
-		return Node{}, err
+		return goparselib.Node{}, err
 	}
 
 	defer file.Close()
@@ -50,15 +51,15 @@ func ParseFile(filename string, language Symbol) (Node, error) {
 	return ParseInput(parsereader.FromReadSeeker(file), language)
 }
 
-func ParseInput(reader parsereader.Reader, language Symbol) (Node, error) {
+func ParseInput(reader parsereader.Reader, language goparselib.Symbol) (goparselib.Node, error) {
 	return parse(reader, 0, language)
 }
 
-func parse(reader parsereader.Reader, start int64, language Symbol) (Node, error) {
+func parse(reader parsereader.Reader, start int64, language goparselib.Symbol) (goparselib.Node, error) {
 	switch language.(type) {
-	case Union:
-		l := language.(Union)
-		found, best, firstErr := false, Node{}, error(nil)
+	case goparselib.Union:
+		l := language.(goparselib.Union)
+		found, best, firstErr := false, goparselib.Node{}, error(nil)
 
 		for i := range l {
 			if child, err := parse(reader, start, l[i]); err == nil {
@@ -67,16 +68,16 @@ func parse(reader parsereader.Reader, start int64, language Symbol) (Node, error
 				if child.Size > best.Size {
 					best = child
 				}
-			} else if _, ok := err.(SyntaxError); !ok {
+			} else if _, ok := err.(goparselib.SyntaxError); !ok {
 				// not a syntax error, so immediately fail
-				return Node{}, err
+				return goparselib.Node{}, err
 			} else if firstErr == nil {
 				firstErr = err
 			}
 		}
 
 		if !found {
-			return Node{}, SyntaxError{
+			return goparselib.Node{}, goparselib.SyntaxError{
 				At:       start,
 				Expected: language,
 				Got:      "",
@@ -84,22 +85,22 @@ func parse(reader parsereader.Reader, start int64, language Symbol) (Node, error
 			}
 		}
 
-		return Node{
+		return goparselib.Node{
 			Start:    best.Start,
 			Size:     best.Size,
 			Contents: "",
 			Type:     language,
-			Children: []Node{best},
+			Children: []goparselib.Node{best},
 		}, nil
-	case Concat:
-		l := language.(Concat)
+	case goparselib.Concat:
+		l := language.(goparselib.Concat)
 
 		pos := int64(0)
-		children := make([]Node, 0)
+		children := make([]goparselib.Node, 0)
 
 		for i := range l {
 			if child, err := parse(reader, start+pos, l[i]); err != nil {
-				return Node{}, SyntaxError{
+				return goparselib.Node{}, goparselib.SyntaxError{
 					At:       start,
 					Expected: language,
 					Got:      "",
@@ -111,19 +112,19 @@ func parse(reader parsereader.Reader, start int64, language Symbol) (Node, error
 			}
 		}
 
-		return Node{
+		return goparselib.Node{
 			Start:    start,
 			Size:     pos,
 			Children: children,
 			Type:     language,
 		}, nil
-	case Terminal:
-		t := language.(Terminal)
+	case goparselib.Terminal:
+		t := language.(goparselib.Terminal)
 
 		// make sure the reader is positioned at start
 		_, err := reader.Seek(start, io.SeekStart)
 		if err != nil {
-			return Node{}, InputError{
+			return goparselib.Node{}, goparselib.InputError{
 				At:  start,
 				Err: err,
 			}
@@ -136,7 +137,7 @@ func parse(reader parsereader.Reader, start int64, language Symbol) (Node, error
 			reader.Seek(start, io.SeekStart)
 			r, _, _ := reader.ReadRune()
 
-			return Node{}, SyntaxError{
+			return goparselib.Node{}, goparselib.SyntaxError{
 				At:       start,
 				Expected: language,
 				Got:      string([]rune{r}), // todo: add string
@@ -146,23 +147,23 @@ func parse(reader parsereader.Reader, start int64, language Symbol) (Node, error
 		// extract string contents
 		str, err := loc2string(start, loc[1], reader)
 		if err != nil {
-			return Node{}, InputError{
+			return goparselib.Node{}, goparselib.InputError{
 				At:  start,
 				Err: err,
 			}
 		}
 
-		return Node{
+		return goparselib.Node{
 			Start:    start,
 			Size:     int64(loc[1]),
 			Type:     language,
 			Contents: str,
 		}, nil
-	case Reference:
-		return parse(reader, start, *language.(Reference).R)
+	case goparselib.Reference:
+		return parse(reader, start, *language.(goparselib.Reference).R)
 	case nil:
 		// nil always matches with a zero length submatch
-		return Node{
+		return goparselib.Node{
 			Start:    start,
 			Size:     0,
 			Contents: "",
@@ -170,6 +171,6 @@ func parse(reader parsereader.Reader, start int64, language Symbol) (Node, error
 			Children: nil,
 		}, nil
 	default:
-		return Node{}, ParserError{language}
+		return goparselib.Node{}, goparselib.ParserError{language}
 	}
 }

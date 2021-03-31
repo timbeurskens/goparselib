@@ -1,6 +1,6 @@
 package ini
 
-import . "goparselib"
+import . "github.com/timbeurskens/goparselib"
 
 var (
 	parOpen        = CTerminal("\\[")
@@ -20,3 +20,7 @@ var (
 	// specify layout symbols for reduction
 	Layout = []Symbol{parOpen, parClose, eq, BlankOpt, Blank, nil, EOL}
 )
+
+func Load() Symbol {
+	return Root
+}

@@ -2,17 +2,16 @@ package cnf
 
 import (
 	"encoding/json"
+	"github.com/timbeurskens/goparselib/parser"
 	"os"
 	"testing"
-
-	"goparselib"
 )
 
 func TestParse(t *testing.T) {
-	t.Log(goparselib.ParseString("(a&-a&-a)#", root))
+	t.Log(parser.ParseString("(a&-a&-a)#", root))
 	t.Log("------")
 	str := "((a&-b&c)|-(-a|(a|b|c)))#"
-	tree, _ := goparselib.ParseString(str, root)
+	tree, _ := parser.ParseString(str, root)
 
 	encoder := json.NewEncoder(os.Stdout)
 	encoder.SetIndent("", "  ")

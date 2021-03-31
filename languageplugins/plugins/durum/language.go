@@ -1,6 +1,8 @@
 package durum
 
-import . "goparselib"
+import (
+	. "github.com/timbeurskens/goparselib"
+)
 
 var (
 	FDelim       = CTerminal("---")

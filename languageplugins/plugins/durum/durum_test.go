@@ -1,9 +1,10 @@
 package durum
 
 import (
+	"github.com/timbeurskens/goparselib/parser"
 	"testing"
 
-	"goparselib"
+	"github.com/timbeurskens/goparselib"
 )
 
 var definitions = map[string]string{
@@ -73,6 +74,14 @@ func TestDefinitions(t *testing.T) {
 	DoTestInput(t, definitions, Definition)
 }
 
+func TestFromFile(t *testing.T) {
+	result, err := parser.ParseFile("examples/basic.du", Root)
+	if err != nil {
+		t.Error(err)
+	}
+	t.Log(result)
+}
+
 func TestFullPartial(t *testing.T) {
 	t.Parallel()
 	DoTestInput(t, definitions, Root)
@@ -99,7 +108,7 @@ func TestActions(t *testing.T) {
 func DoTestInput(t *testing.T, input map[string]string, symbol goparselib.Symbol) {
 	for name, testStr := range input {
 		t.Run(name, func(t *testing.T) {
-			result, err := goparselib.ParseString(testStr, symbol)
+			result, err := parser.ParseString(testStr, symbol)
 			if err != nil {
 				t.Error(err)
 			}

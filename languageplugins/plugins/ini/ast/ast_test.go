@@ -2,15 +2,15 @@ package ast
 
 import (
 	"encoding/json"
+	"github.com/timbeurskens/goparselib/parser"
 	"os"
 	"testing"
 
-	"goparselib"
-	"goparselib/examples/ini"
+	"github.com/timbeurskens/goparselib/languageplugins/plugins/ini"
 )
 
 func TestFile(t *testing.T) {
-	tree, err := goparselib.ParseFile("test.ini", ini.Root)
+	tree, err := parser.ParseFile("test.ini", ini.Root)
 	if err != nil {
 		t.Error(err)
 	}

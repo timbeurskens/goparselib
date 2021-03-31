@@ -1,14 +1,15 @@
 package ini
 
 import (
+	"github.com/timbeurskens/goparselib/parser"
 	"log"
 	"testing"
 
-	"goparselib"
+	"github.com/timbeurskens/goparselib"
 )
 
 func TestBasic(t *testing.T) {
-	n, err := goparselib.ParseString(basic1, Root)
+	n, err := parser.ParseString(basic1, Root)
 	if err != nil {
 		t.Error(err)
 	}
@@ -20,7 +21,7 @@ func TestBasic(t *testing.T) {
 }
 
 func TestEmpty(t *testing.T) {
-	n, err := goparselib.ParseString(empty, Root)
+	n, err := parser.ParseString(empty, Root)
 	if err != nil {
 		t.Error(err)
 	}
@@ -57,7 +58,7 @@ size = 4
 }
 
 func TestFile(t *testing.T) {
-	tree, err := goparselib.ParseFile("test.ini", Root)
+	tree, err := parser.ParseFile("test.ini", Root)
 	if err != nil {
 		t.Error(err)
 	}

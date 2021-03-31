@@ -1,17 +1,18 @@
 package sml
 
 import (
+	"github.com/timbeurskens/goparselib/parser"
 	"log"
 	"testing"
 
-	"goparselib"
+	"github.com/timbeurskens/goparselib"
 )
 
 func TestBasic(t *testing.T) {
-	t.Log(goparselib.ParseString(line, timelineLine))
-	t.Log(goparselib.ParseString(eolExample, eol))
+	t.Log(parser.ParseString(line, timelineLine))
+	t.Log(parser.ParseString(eolExample, eol))
 
-	tree, err := goparselib.ParseString(basic, goparselib.R(root))
+	tree, err := parser.ParseString(basic, goparselib.R(root))
 	if err != nil {
 		t.Error(err)
 	}
