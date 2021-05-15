@@ -5,6 +5,6 @@ import (
 	"github.com/timbeurskens/goparselib/languageplugins/plugins/ini"
 )
 
-func Load() goparselib.Symbol {
-	return ini.Root
+func Load() goparselib.Plugin {
+	return goparselib.MakePlugin(ini.Root, ini.Layout)
 }

@@ -6,6 +6,6 @@ import (
 )
 
 // Load is the initial function
-func Load() goparselib.Symbol {
-	return durum.Root
+func Load() goparselib.Plugin {
+	return goparselib.MakePlugin(durum.Root, durum.Layout)
 }

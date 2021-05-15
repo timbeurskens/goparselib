@@ -17,10 +17,6 @@ var (
 	sections       = List(Section, nil, LF)
 	Root           = Concat{PropertyList, sections}
 
-	// specify layout symbols for reduction
+	// Layout specifies the layout symbols for reduction
 	Layout = []Symbol{parOpen, parClose, eq, BlankOpt, Blank, nil, LF}
 )
-
-func Load() Symbol {
-	return Root
-}

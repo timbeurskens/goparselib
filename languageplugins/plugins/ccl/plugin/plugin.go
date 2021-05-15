@@ -5,6 +5,6 @@ import (
 	"github.com/timbeurskens/goparselib/languageplugins/plugins/ccl"
 )
 
-func Load() goparselib.Symbol {
-	return ccl.Root
+func Load() goparselib.Plugin {
+	return goparselib.MakePlugin(ccl.Root, nil)
 }

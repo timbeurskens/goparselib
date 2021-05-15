@@ -36,8 +36,12 @@ func main() {
 
 	languageRoot := loadFunc()
 
-	if parseResult, err = parser.ParseFile(*infileFlag, languageRoot); err != nil {
+	if parseResult, err = parser.ParseFile(*infileFlag, languageRoot.Root()); err != nil {
 		log.Fatal(err)
+	}
+
+	if languageRoot.Layout() != nil {
+		parseResult, err = parseResult.Reduce(languageRoot.Layout()...)
 	}
 
 	log.Println(parseResult)

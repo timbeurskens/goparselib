@@ -5,6 +5,6 @@ import (
 	"github.com/timbeurskens/goparselib/languageplugins/plugins/sml"
 )
 
-func Load() goparselib.Symbol {
-	return goparselib.R(sml.Root)
+func Load() goparselib.Plugin {
+	return goparselib.MakePlugin(goparselib.R(sml.Root), nil)
 }
