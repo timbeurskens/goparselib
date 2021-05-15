@@ -1,7 +1,6 @@
 package ini
 
 import (
-	"github.com/timbeurskens/goparselib/parser"
 	"reflect"
 	"strings"
 
@@ -11,21 +10,6 @@ import (
 // Reader can parse ini files
 type Reader struct {
 	Model goparselib.Node
-}
-
-func New(input string) (Reader, error) {
-	tree, err := parser.ParseString(input, Root)
-	if err != nil {
-		return Reader{}, err
-	}
-	ast, err := tree.Reduce(nil, parOpen, parClose, eq, goparselib.Blank, goparselib.EOL, goparselib.BlankOpt)
-	if err != nil {
-		return Reader{}, err
-	}
-
-	return Reader{
-		Model: ast,
-	}, nil
 }
 
 func (r Reader) Property(ident string) (string, error) {

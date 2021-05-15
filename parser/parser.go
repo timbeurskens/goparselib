@@ -68,7 +68,7 @@ func parse(reader parsereader.Reader, start int64, language goparselib.Symbol) (
 				if child.Size > best.Size {
 					best = child
 				}
-			} else if _, ok := err.(goparselib.SyntaxError); !ok {
+			} else if _, ok := err.(SyntaxError); !ok {
 				// not a syntax error, so immediately fail
 				return goparselib.Node{}, err
 			} else if firstErr == nil {
@@ -77,7 +77,7 @@ func parse(reader parsereader.Reader, start int64, language goparselib.Symbol) (
 		}
 
 		if !found {
-			return goparselib.Node{}, goparselib.SyntaxError{
+			return goparselib.Node{}, SyntaxError{
 				At:       start,
 				Expected: language,
 				Got:      "",
@@ -100,7 +100,7 @@ func parse(reader parsereader.Reader, start int64, language goparselib.Symbol) (
 
 		for i := range l {
 			if child, err := parse(reader, start+pos, l[i]); err != nil {
-				return goparselib.Node{}, goparselib.SyntaxError{
+				return goparselib.Node{}, SyntaxError{
 					At:       start,
 					Expected: language,
 					Got:      "",
@@ -124,7 +124,7 @@ func parse(reader parsereader.Reader, start int64, language goparselib.Symbol) (
 		// make sure the reader is positioned at start
 		_, err := reader.Seek(start, io.SeekStart)
 		if err != nil {
-			return goparselib.Node{}, goparselib.InputError{
+			return goparselib.Node{}, InputError{
 				At:  start,
 				Err: err,
 			}
@@ -137,7 +137,7 @@ func parse(reader parsereader.Reader, start int64, language goparselib.Symbol) (
 			reader.Seek(start, io.SeekStart)
 			r, _, _ := reader.ReadRune()
 
-			return goparselib.Node{}, goparselib.SyntaxError{
+			return goparselib.Node{}, SyntaxError{
 				At:       start,
 				Expected: language,
 				Got:      string([]rune{r}), // todo: add string
@@ -147,7 +147,7 @@ func parse(reader parsereader.Reader, start int64, language goparselib.Symbol) (
 		// extract string contents
 		str, err := loc2string(start, loc[1], reader)
 		if err != nil {
-			return goparselib.Node{}, goparselib.InputError{
+			return goparselib.Node{}, InputError{
 				At:  start,
 				Err: err,
 			}
@@ -171,6 +171,6 @@ func parse(reader parsereader.Reader, start int64, language goparselib.Symbol) (
 			Children: nil,
 		}, nil
 	default:
-		return goparselib.Node{}, goparselib.ParserError{language}
+		return goparselib.Node{}, ParserError{language}
 	}
 }

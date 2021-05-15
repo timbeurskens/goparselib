@@ -1,10 +1,13 @@
-package goparselib
+package parser
 
-import "fmt"
+import (
+	"fmt"
+	"github.com/timbeurskens/goparselib"
+)
 
 type SyntaxError struct {
 	At       int64
-	Expected Symbol
+	Expected goparselib.Symbol
 	Got      string
 	Err      error
 }
@@ -23,7 +26,7 @@ func (i InputError) Error() string {
 }
 
 type ParserError struct {
-	Symbol
+	goparselib.Symbol
 }
 
 func (p ParserError) Error() string {

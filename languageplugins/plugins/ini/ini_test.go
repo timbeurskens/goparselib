@@ -8,6 +8,21 @@ import (
 	"github.com/timbeurskens/goparselib"
 )
 
+func New(input string) (Reader, error) {
+	tree, err := parser.ParseString(input, Root)
+	if err != nil {
+		return Reader{}, err
+	}
+	ast, err := tree.Reduce(nil, parOpen, parClose, eq, goparselib.Blank, goparselib.EOL, goparselib.BlankOpt)
+	if err != nil {
+		return Reader{}, err
+	}
+
+	return Reader{
+		Model: ast,
+	}, nil
+}
+
 func TestBasic(t *testing.T) {
 	n, err := parser.ParseString(basic1, Root)
 	if err != nil {
