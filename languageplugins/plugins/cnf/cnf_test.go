@@ -2,9 +2,10 @@ package cnf
 
 import (
 	"encoding/json"
-	"github.com/timbeurskens/goparselib/parser"
 	"os"
 	"testing"
+
+	"github.com/timbeurskens/goparselib/parser"
 )
 
 func TestParse(t *testing.T) {
