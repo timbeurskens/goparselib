@@ -18,7 +18,7 @@ var (
 	conjunction    = new(Symbol)
 	disjunction    = new(Symbol)
 	expression     = new(Symbol)
-	root           = Concat{R(expression), end}
+	Root           = Concat{R(expression), end}
 )
 
 func init() {

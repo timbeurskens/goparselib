@@ -61,6 +61,10 @@ func (n Node) NilReduce() (Node, error) {
 
 // Reduce creates a reduced copy of the original tree by removing all nodes with type in symbols
 func (n Node) Reduce(symbols ...Symbol) (Node, error) {
+	if symbols == nil || len(symbols) == 0 {
+		return Node{}, errors.New("set of layout symbols is empty or nonexistent")
+	}
+
 	if inSymbols(n.Type, symbols) {
 		return Node{}, errors.New("root node is not in the reduced set")
 	}
