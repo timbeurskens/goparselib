@@ -115,6 +115,12 @@ func (n Node) Output(writer io.Writer) error {
 	return nil
 }
 
+func (n Node) FindType(symbol Symbol) (Node, error) {
+	return n.Find(func(node Node) bool {
+		return reflect.DeepEqual(node.Type, symbol)
+	})
+}
+
 // Find returns the first node in which the provided condition holds
 func (n Node) Find(condition func(Node) bool) (Node, error) {
 	if condition(n) {
