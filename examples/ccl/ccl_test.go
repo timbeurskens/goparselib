@@ -4,7 +4,7 @@ import (
 	"strings"
 	"testing"
 
-	"goparselib"
+	"github.com/timbeurskens/goparselib"
 )
 
 func TestSimple(t *testing.T) {

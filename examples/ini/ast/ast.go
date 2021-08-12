@@ -5,8 +5,8 @@ import (
 	"reflect"
 	"strconv"
 
-	"goparselib"
-	"goparselib/examples/ini"
+	"github.com/timbeurskens/goparselib"
+	"github.com/timbeurskens/goparselib/examples/ini"
 )
 
 type StringProperty struct {

@@ -4,7 +4,7 @@ import (
 	"reflect"
 	"strings"
 
-	"goparselib"
+	"github.com/timbeurskens/goparselib"
 )
 
 // Reader can parse ini files

@@ -5,8 +5,8 @@ import (
 	"os"
 	"testing"
 
-	"goparselib"
-	"goparselib/examples/ini"
+	"github.com/timbeurskens/goparselib"
+	"github.com/timbeurskens/goparselib/examples/ini"
 )
 
 func TestFile(t *testing.T) {

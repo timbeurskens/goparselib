@@ -5,7 +5,7 @@ import (
 	"os"
 	"strings"
 
-	"goparselib/parsereader"
+	"github.com/timbeurskens/goparselib/parsereader"
 )
 
 func ParseString(str string, language Symbol) (Node, error) {

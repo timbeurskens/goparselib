@@ -3,7 +3,7 @@ package durum
 import (
 	"testing"
 
-	"goparselib"
+	"github.com/timbeurskens/goparselib"
 )
 
 var definitions = map[string]string{

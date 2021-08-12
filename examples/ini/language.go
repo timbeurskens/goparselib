@@ -1,6 +1,6 @@
 package ini
 
-import . "goparselib"
+import . "github.com/timbeurskens/goparselib"
 
 var (
 	parOpen        = CTerminal("\\[")

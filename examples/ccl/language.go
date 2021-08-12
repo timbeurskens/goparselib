@@ -1,6 +1,6 @@
 package ccl
 
-import . "goparselib"
+import . "github.com/timbeurskens/goparselib"
 
 var (
 	engineType = Union{

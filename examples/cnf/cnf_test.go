@@ -5,7 +5,7 @@ import (
 	"os"
 	"testing"
 
-	"goparselib"
+	"github.com/timbeurskens/goparselib"
 )
 
 func TestParse(t *testing.T) {
