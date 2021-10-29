@@ -1,26 +1,18 @@
 package cnf
 
 import (
-	"encoding/json"
-	"os"
 	"testing"
 
-	"github.com/timbeurskens/goparselib/parser"
+	parsetest "github.com/timbeurskens/goparselib/testing"
 )
 
-func TestParse(t *testing.T) {
-	t.Log(parser.ParseString("(a&-a&-a)#", Root))
-	t.Log("------")
-	str := "((a&-b&c)|-(-a|(a|b|c)))#"
-	tree, _ := parser.ParseString(str, Root)
-
-	encoder := json.NewEncoder(os.Stdout)
-	encoder.SetIndent("", "  ")
-	if err := encoder.Encode(tree); err != nil {
-		t.Error(err)
-	}
-}
-
-func TestParse2(t *testing.T) {
-	t.Log(parser.ParseString("((a|b)&c)#", Root))
+func TestCNF(t *testing.T) {
+	parsetest.DoTestInput(t, map[string]string{
+		"simple_expr_1":   `(a|b)`,
+		"simple_expr_2":   `(a&b)`,
+		"composed_expr_1": `((a|b)&b)`,
+		"triple_expr_1":   `(a&b&c)`,
+		"triple_neg_1":    `(a&-a&-a)`,
+		"complex_1":       `((a&-b&c)|-(-a|(a|b|c)))`,
+	}, Root)
 }

@@ -4,7 +4,6 @@ import . "github.com/timbeurskens/goparselib"
 
 var (
 	variable       = CTerminal("[a-z][a-z0-9]*")
-	end            = CTerminal("#")
 	and            = CTerminal("&")
 	or             = CTerminal("\\|")
 	implies        = CTerminal("=>")
@@ -18,7 +17,7 @@ var (
 	conjunction    = new(Symbol)
 	disjunction    = new(Symbol)
 	expression     = new(Symbol)
-	Root           = Concat{R(expression), end}
+	Root           = R(expression)
 )
 
 func init() {
