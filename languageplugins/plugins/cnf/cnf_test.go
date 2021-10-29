@@ -20,3 +20,7 @@ func TestParse(t *testing.T) {
 		t.Error(err)
 	}
 }
+
+func TestParse2(t *testing.T) {
+	t.Log(parser.ParseString("((a|b)&c)#", Root))
+}
