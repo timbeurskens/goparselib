@@ -5,12 +5,12 @@ import (
 
 	"github.com/timbeurskens/goparselib/parser"
 
-	"github.com/timbeurskens/goparselib"
+	parsetest "github.com/timbeurskens/goparselib/testing"
 )
 
 func TestStateDefinition(t *testing.T) {
 	t.Parallel()
-	DoTestInput(t, map[string]string{
+	parsetest.DoTestInput(t, map[string]string{
 		"basic":         `state initial {}`,
 		"basic_initial": `start state initial {}`,
 		"basic_eol": `start state initial {
@@ -40,7 +40,7 @@ func TestStateDefinition(t *testing.T) {
 
 func TestDefinitions(t *testing.T) {
 	t.Parallel()
-	DoTestInput(t, map[string]string{
+	parsetest.DoTestInput(t, map[string]string{
 		"basic integer": `def counter = int32_t`,
 		"parameter int": `def led = gpio_input 10`,
 	}, Definition)
@@ -56,14 +56,14 @@ func TestFromFile(t *testing.T) {
 
 func TestFullPartial(t *testing.T) {
 	t.Parallel()
-	DoTestInput(t, map[string]string{
+	parsetest.DoTestInput(t, map[string]string{
 		"basic integer": `def counter = int32_t`,
 		"parameter int": `def led = gpio_input 10`,
 	}, Root)
-	DoTestInput(t, map[string]string{
+	parsetest.DoTestInput(t, map[string]string{
 		"timer tick": `event timer_tick = timer tick`,
 	}, Root)
-	DoTestInput(t, map[string]string{
+	parsetest.DoTestInput(t, map[string]string{
 		"basic":         `state initial {}`,
 		"basic_initial": `start state initial {}`,
 		"basic_eol": `start state initial {
@@ -89,7 +89,7 @@ func TestFullPartial(t *testing.T) {
 	do some_action (a, 10, zozo)
 }`,
 	}, Root)
-	DoTestInput(t, map[string]string{
+	parsetest.DoTestInput(t, map[string]string{
 		"no_param":     `action test {}`,
 		"single_param": `action test (a) {}`,
 	}, Root)
@@ -97,7 +97,7 @@ func TestFullPartial(t *testing.T) {
 
 func TestFull(t *testing.T) {
 	t.Parallel()
-	DoTestInput(t, map[string]string{
+	parsetest.DoTestInput(t, map[string]string{
 		"basic": `def counter = int32_t 10
 
 event tick = counter overflow
@@ -116,27 +116,15 @@ state next {
 
 func TestEvents(t *testing.T) {
 	t.Parallel()
-	DoTestInput(t, map[string]string{
+	parsetest.DoTestInput(t, map[string]string{
 		"timer tick": `event timer_tick = timer tick`,
 	}, Event)
 }
 
 func TestActions(t *testing.T) {
 	t.Parallel()
-	DoTestInput(t, map[string]string{
+	parsetest.DoTestInput(t, map[string]string{
 		"no_param":     `action test {}`,
 		"single_param": `action test (a) {}`,
 	}, Action)
-}
-
-func DoTestInput(t *testing.T, input map[string]string, symbol goparselib.Symbol) {
-	for name, testStr := range input {
-		t.Run(name, func(t *testing.T) {
-			result, err := parser.ParseString(testStr, symbol)
-			if err != nil {
-				t.Error(err)
-			}
-			t.Log(result)
-		})
-	}
 }
